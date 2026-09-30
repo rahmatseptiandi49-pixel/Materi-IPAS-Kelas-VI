@@ -1,0 +1,984 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>IPAS Kelas 6 - Makanan Bergizi & Kesehatan Pencernaan</title>
+    <!-- Tailwind CSS CDN -->
+    <script src="https://cdn.tailwindcss.com"></script>
+    <!-- FontAwesome Icons -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <!-- Canvas Confetti for Celebration -->
+    <script src="https://cdn.jsdelivr.net/npm/canvas-confetti@1.6.0/dist/confetti.browser.min.js"></script>
+    <!-- Google Fonts -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Fredoka:wght@400;500;600;700&family=Nunito:wght@400;600;700;800&display=swap" rel="stylesheet">
+
+    <style>
+        body {
+            font-family: 'Nunito', sans-serif;
+            background: linear-gradient(135deg, #f0fdf4 0%, #e0f2fe 50%, #fef3c7 100%);
+            min-height: 100vh;
+        }
+        h1, h2, h3, h4, .font-fun {
+            font-family: 'Fredoka', cursive;
+        }
+        .card-bounce {
+            transition: all 0.3s cubic-bezier(0.34, 1.56, 0.64, 1);
+        }
+        .card-bounce:hover {
+            transform: translateY(-6px) scale(1.02);
+        }
+        .pulse-slow {
+            animation: pulse 3s infinite;
+        }
+        @keyframes pulse {
+            0%, 100% { transform: scale(1); }
+            50% { transform: scale(1.05); }
+        }
+        .bg-grid-pattern {
+            background-size: 30px 30px;
+            background-image: radial-gradient(circle, #cbd5e1 1px, transparent 1px);
+        }
+        /* Custom scrollbar */
+        ::-webkit-scrollbar {
+            width: 10px;
+        }
+        ::-webkit-scrollbar-track {
+            background: #f1f5f9;
+        }
+        ::-webkit-scrollbar-thumb {
+            background: #3b82f6;
+            border-radius: 5px;
+        }
+        /* Print styling for Certificate */
+        @media print {
+            body * {
+                visibility: hidden;
+            }
+            #certificate-print-area, #certificate-print-area * {
+                visibility: visible;
+            }
+            #certificate-print-area {
+                position: absolute;
+                left: 0;
+                top: 0;
+                width: 100%;
+            }
+            .no-print {
+                display: none !important;
+            }
+        }
+    </style>
+</head>
+<body class="text-slate-800 antialiased bg-grid-pattern pb-12">
+
+    <header class="sticky top-0 z-50 bg-white/90 backdrop-blur-md border-b-4 border-amber-400 shadow-md">
+        <div class="max-w-6xl mx-auto px-4 py-3 flex flex-wrap items-center justify-between gap-3">
+            <div class="flex items-center gap-3">
+                <div class="bg-amber-400 text-amber-900 p-2.5 rounded-2xl shadow-inner font-black text-2xl flex items-center justify-center">
+                    <i class="fa-solid fa-apple-whole animate-bounce"></i>
+                </div>
+                <div>
+                    <h1 class="text-xl md:text-2xl font-bold text-emerald-700 leading-tight">IPAS Kelas VI</h1>
+                    <p class="text-xs md:text-sm text-slate-500 font-semibold">Makanan Bergizi & Kesehatan Pencernaan</p>
+                </div>
+            </div>
+
+            <!-- Global Controls & Student Info Badge -->
+            <div class="flex items-center gap-3">
+                <!-- Music Control Button -->
+                <button id="musicToggleBtn" onclick="toggleMusic()" class="flex items-center gap-2 bg-purple-100 hover:bg-purple-200 text-purple-700 px-3 py-2 rounded-xl text-sm font-bold border-2 border-purple-300 transition-all shadow-sm">
+                    <i id="musicIcon" class="fa-solid fa-music"></i>
+                    <span id="musicText" class="hidden sm:inline">Musik: OFF</span>
+                </button>
+
+                <!-- Student Profile Pill -->
+                <div class="bg-emerald-100 border-2 border-emerald-300 px-3 py-1.5 rounded-xl flex items-center gap-2">
+                    <i class="fa-solid fa-user-graduate text-emerald-600"></i>
+                    <span id="navStudentName" class="text-xs md:text-sm font-bold text-emerald-900 truncate max-w-[120px] md:max-w-[180px]">Siswa Baru</span>
+                </div>
+            </div>
+        </div>
+    </header>
+
+    <main class="max-w-6xl mx-auto px-4 mt-6">
+
+        <!-- Welcome Banner & Student Name Input -->
+        <section class="bg-gradient-to-r from-emerald-500 via-teal-500 to-cyan-500 rounded-3xl p-6 md:p-8 text-white shadow-xl mb-8 relative overflow-hidden border-4 border-white">
+            <div class="absolute -right-10 -bottom-10 opacity-20 text-white text-9xl">
+                <i class="fa-solid fa-carrot"></i>
+            </div>
+            <div class="relative z-10 grid md:grid-cols-3 gap-6 items-center">
+                <div class="md:col-span-2">
+                    <span class="bg-amber-300 text-amber-900 text-xs font-black uppercase px-3 py-1 rounded-full shadow-sm tracking-wider">Modul Interaktif SD/MI</span>
+                    <h2 class="text-2xl md:text-4xl font-extrabold mt-2 leading-tight">Petualangan Gizi & Usus Sehat! 🥗</h2>
+                    <p class="text-emerald-100 mt-2 text-sm md:text-base">Ayo pelajari bagaimana makanan yang kamu makan diproses oleh organ pencernaan dan zat gizi apa saja yang dibutuhkan tubuhmu!</p>
+                </div>
+                
+                <!-- Student Name Card -->
+                <div class="bg-white/95 backdrop-blur text-slate-800 p-4 rounded-2xl shadow-lg border-2 border-emerald-200">
+                    <label class="block text-xs font-bold text-slate-500 uppercase mb-1">Nama Siswa / Siswi:</label>
+                    <input type="text" id="studentNameInput" placeholder="Masukkan nama lengkapmu..." class="w-full px-3 py-2 border-2 border-emerald-300 rounded-xl focus:outline-none focus:ring-2 focus:ring-emerald-500 text-sm font-bold mb-3" oninput="updateStudentName(this.value)">
+                    <div class="flex items-center justify-between text-xs text-slate-500">
+                        <span><i class="fa-solid fa-school text-emerald-600"></i> Kelas 6 SD</span>
+                        <span id="nameStatus" class="text-emerald-600 font-bold"><i class="fa-solid fa-circle-check"></i> Siap</span>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- Navigation Tabs -->
+        <div class="flex flex-wrap gap-2 md:gap-4 mb-6 border-b-2 border-slate-200 pb-2">
+            <button onclick="switchTab('materi')" id="tab-materi" class="tab-btn active bg-emerald-600 text-white px-5 py-2.5 rounded-2xl font-bold text-sm md:text-base shadow-md transition-all flex items-center gap-2">
+                <i class="fa-solid fa-book-open"></i> Materi Pembelajaran
+            </button>
+            <button onclick="switchTab('minigame')" id="tab-minigame" class="tab-btn bg-white hover:bg-slate-100 text-slate-700 px-5 py-2.5 rounded-2xl font-bold text-sm md:text-base transition-all flex items-center gap-2 border-2 border-slate-200">
+                <i class="fa-solid fa-utensils text-amber-500"></i> Game: Isi Piringku
+            </button>
+            <button onclick="switchTab('kuis')" id="tab-kuis" class="tab-btn bg-white hover:bg-slate-100 text-slate-700 px-5 py-2.5 rounded-2xl font-bold text-sm md:text-base transition-all flex items-center gap-2 border-2 border-slate-200">
+                <i class="fa-solid fa-brain text-purple-500"></i> Kuis Interaktif
+            </button>
+            <button onclick="switchTab('sertifikat')" id="tab-sertifikat" class="tab-btn bg-white hover:bg-slate-100 text-slate-700 px-5 py-2.5 rounded-2xl font-bold text-sm md:text-base transition-all flex items-center gap-2 border-2 border-slate-200">
+                <i class="fa-solid fa-award text-yellow-500"></i> Sertifikat Saya
+            </button>
+        </div>
+
+        <div id="content-materi" class="tab-content space-y-8">
+            
+            <!-- Quick Sub-Navigation for Materi -->
+            <div class="grid grid-cols-2 md:grid-cols-4 gap-3">
+                <a href="#section-zatgizi" class="bg-amber-100 border-2 border-amber-300 hover:bg-amber-200 text-amber-900 p-3 rounded-2xl font-bold text-xs md:text-sm flex items-center justify-center gap-2 shadow-sm">
+                    <i class="fa-solid fa-apple-whole text-amber-600"></i> 1. Zat-Zat Gizi
+                </a>
+                <a href="#section-isipiringku" class="bg-emerald-100 border-2 border-emerald-300 hover:bg-emerald-200 text-emerald-900 p-3 rounded-2xl font-bold text-xs md:text-sm flex items-center justify-center gap-2 shadow-sm">
+                    <i class="fa-solid fa-plate-wheat text-emerald-600"></i> 2. Isi Piringku
+                </a>
+                <a href="#section-pencernaan" class="bg-sky-100 border-2 border-sky-300 hover:bg-sky-200 text-sky-900 p-3 rounded-2xl font-bold text-xs md:text-sm flex items-center justify-center gap-2 shadow-sm">
+                    <i class="fa-solid fa-stomach text-sky-600"></i> 3. Organ & Jalur Usus
+                </a>
+                <a href="#section-gangguan" class="bg-rose-100 border-2 border-rose-300 hover:bg-rose-200 text-rose-900 p-3 rounded-2xl font-bold text-xs md:text-sm flex items-center justify-center gap-2 shadow-sm">
+                    <i class="fa-solid fa-notes-medical text-rose-600"></i> 4. Gangguan Pencernaan
+                </a>
+            </div>
+
+            <!-- Sub-Section 1: Zat Gizi Utama -->
+            <section id="section-zatgizi" class="bg-white rounded-3xl p-6 md:p-8 shadow-lg border-2 border-slate-100">
+                <div class="flex items-center gap-3 mb-6">
+                    <div class="w-12 h-12 rounded-2xl bg-amber-500 text-white flex items-center justify-center text-xl font-bold shadow-md">
+                        1
+                    </div>
+                    <div>
+                        <h3 class="text-2xl font-bold text-slate-800">Zat Gizi Utama untuk Tubuh</h3>
+                        <p class="text-sm text-slate-500">Makanan bergizi mengandung 6 komponen utama yang dibutuhkan sistem pencernaan dan tubuh kita.</p>
+                    </div>
+                </div>
+
+                <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4">
+                    <!-- Karbohidrat -->
+                    <div class="card-bounce bg-gradient-to-br from-amber-50 to-orange-50 border-2 border-amber-200 p-5 rounded-2xl">
+                        <div class="flex items-center justify-between mb-3">
+                            <span class="text-3xl">🌾</span>
+                            <span class="bg-amber-200 text-amber-800 text-xs font-black px-2.5 py-1 rounded-full">Sumber Energi Utama</span>
+                        </div>
+                        <h4 class="text-lg font-bold text-amber-900">Karbohidrat</h4>
+                        <p class="text-xs text-slate-600 mt-1 leading-relaxed">Memberikan bahan bakar bagi tubuh untuk beraktivitas dan berpikir.</p>
+                        <div class="mt-3 text-xs bg-white/80 p-2 rounded-xl border border-amber-200">
+                            <strong>Contoh:</strong> Nasi, jagung, singkong, kentang, gandum, roti.
+                        </div>
+                    </div>
+
+                    <!-- Protein -->
+                    <div class="card-bounce bg-gradient-to-br from-rose-50 to-pink-50 border-2 border-rose-200 p-5 rounded-2xl">
+                        <div class="flex items-center justify-between mb-3">
+                            <span class="text-3xl">🍗</span>
+                            <span class="bg-rose-200 text-rose-800 text-xs font-black px-2.5 py-1 rounded-full">Pembangun & Perbaikan</span>
+                        </div>
+                        <h4 class="text-lg font-bold text-rose-900">Protein</h4>
+                        <p class="text-xs text-slate-600 mt-1 leading-relaxed">Membangun sel-sel baru, memperbaiki jaringan tubuh dan enzim pencernaan.</p>
+                        <div class="mt-3 text-xs bg-white/80 p-2 rounded-xl border border-rose-200">
+                            <strong>Contoh:</strong> Telur, ikan, ayam, tahu, tempe, daging.
+                        </div>
+                    </div>
+
+                    <!-- Lemak Sehat -->
+                    <div class="card-bounce bg-gradient-to-br from-yellow-50 to-amber-50 border-2 border-yellow-300 p-5 rounded-2xl">
+                        <div class="flex items-center justify-between mb-3">
+                            <span class="text-3xl">🥑</span>
+                            <span class="bg-yellow-200 text-yellow-900 text-xs font-black px-2.5 py-1 rounded-full">Cadangan Energi</span>
+                        </div>
+                        <h4 class="text-lg font-bold text-yellow-900">Lemak Sehat</h4>
+                        <p class="text-xs text-slate-600 mt-1 leading-relaxed">Melindungi organ dalam dan membantu penyerapan vitamin A, D, E, K.</p>
+                        <div class="mt-3 text-xs bg-white/80 p-2 rounded-xl border border-yellow-200">
+                            <strong>Contoh:</strong> Alpukat, minyak zaitun, kacang-kacangan, ikan salmon.
+                        </div>
+                    </div>
+
+                    <!-- Serat (Crucial for Digestion) -->
+                    <div class="card-bounce bg-gradient-to-br from-emerald-50 to-teal-50 border-2 border-emerald-300 p-5 rounded-2xl lg:col-span-1">
+                        <div class="flex items-center justify-between mb-3">
+                            <span class="text-3xl">🥦</span>
+                            <span class="bg-emerald-200 text-emerald-900 text-xs font-black px-2.5 py-1 rounded-full">Sahabat Usus Utama!</span>
+                        </div>
+                        <h4 class="text-lg font-bold text-emerald-900">Serat (Fiber)</h4>
+                        <p class="text-xs text-slate-600 mt-1 leading-relaxed">Mencerna makanan secara lancar, mencegah sembelit, dan menjaga bakteri baik usus.</p>
+                        <div class="mt-3 text-xs bg-white/80 p-2 rounded-xl border border-emerald-200">
+                            <strong>Contoh:</strong> Sayur bayam, wortel, pepaya, apel, oatmeal.
+                        </div>
+                    </div>
+
+                    <!-- Vitamin & Mineral -->
+                    <div class="card-bounce bg-gradient-to-br from-purple-50 to-indigo-50 border-2 border-purple-200 p-5 rounded-2xl">
+                        <div class="flex items-center justify-between mb-3">
+                            <span class="text-3xl">🍎</span>
+                            <span class="bg-purple-200 text-purple-800 text-xs font-black px-2.5 py-1 rounded-full">Pengatur & Pelindung</span>
+                        </div>
+                        <h4 class="text-lg font-bold text-purple-900">Vitamin & Mineral</h4>
+                        <p class="text-xs text-slate-600 mt-1 leading-relaxed">Menjaga imun tubuh, melapisi dinding lambung, dan memperlancar metabolisme.</p>
+                        <div class="mt-3 text-xs bg-white/80 p-2 rounded-xl border border-purple-200">
+                            <strong>Contoh:</strong> Buah jeruk, pisang, tomat, keju, susu.
+                        </div>
+                    </div>
+
+                    <!-- Air Putih -->
+                    <div class="card-bounce bg-gradient-to-br from-cyan-50 to-sky-50 border-2 border-cyan-200 p-5 rounded-2xl">
+                        <div class="flex items-center justify-between mb-3">
+                            <span class="text-3xl">💧</span>
+                            <span class="bg-cyan-200 text-cyan-800 text-xs font-black px-2.5 py-1 rounded-full">Pelarut Makanan</span>
+                        </div>
+                        <h4 class="text-lg font-bold text-cyan-900">Air Putih</h4>
+                        <p class="text-xs text-slate-600 mt-1 leading-relaxed">Melarutkan nutrisi, membentuk cairan pencernaan, dan melembutkan sisa makanan.</p>
+                        <div class="mt-3 text-xs bg-white/80 p-2 rounded-xl border border-cyan-200">
+                            <strong>Target:</strong> Minum 7–8 gelas (1,5 - 2 liter) air putih setiap hari!
+                        </div>
+                    </div>
+                </div>
+            </section>
+
+            <!-- Sub-Section 2: Konsep Isi Piringku -->
+            <section id="section-isipiringku" class="bg-white rounded-3xl p-6 md:p-8 shadow-lg border-2 border-slate-100">
+                <div class="flex items-center gap-3 mb-6">
+                    <div class="w-12 h-12 rounded-2xl bg-emerald-500 text-white flex items-center justify-center text-xl font-bold shadow-md">
+                        2
+                    </div>
+                    <div>
+                        <h3 class="text-2xl font-bold text-slate-800">Panduan Gizi Seimbang: "Isi Piringku"</h3>
+                        <p class="text-sm text-slate-500">Panduan resmi dari Kementerian Kesehatan RI untuk sekali makan.</p>
+                    </div>
+                </div>
+
+                <div class="grid md:grid-cols-2 gap-8 items-center">
+                    <!-- Interactive Visual Plate -->
+                    <div class="relative bg-amber-50 rounded-full p-6 border-8 border-slate-200 shadow-xl max-w-sm mx-auto aspect-square flex flex-col justify-center items-center text-center">
+                        <div class="absolute inset-0 grid grid-cols-2 grid-rows-2 rounded-full overflow-hidden border-4 border-white shadow-inner">
+                            <div class="bg-emerald-400/30 p-4 border-r-2 border-b-2 border-white flex flex-col items-center justify-center">
+                                <span class="text-3xl">🥦</span>
+                                <span class="text-xs font-bold text-emerald-900 mt-1">33% Sayuran</span>
+                            </div>
+                            <div class="bg-amber-400/30 p-4 border-b-2 border-white flex flex-col items-center justify-center">
+                                <span class="text-3xl">🍚</span>
+                                <span class="text-xs font-bold text-amber-900 mt-1">33% Makanan Pokok</span>
+                            </div>
+                            <div class="bg-rose-400/30 p-4 border-r-2 border-white flex flex-col items-center justify-center">
+                                <span class="text-3xl">🍎</span>
+                                <span class="text-xs font-bold text-rose-900 mt-1">17% Buah-buahan</span>
+                            </div>
+                            <div class="bg-indigo-400/30 p-4 flex flex-col items-center justify-center">
+                                <span class="text-3xl">🍗</span>
+                                <span class="text-xs font-bold text-indigo-900 mt-1">17% Lauk Pauk</span>
+                            </div>
+                        </div>
+                        <div class="relative z-10 bg-white/90 px-4 py-2 rounded-full shadow-lg border border-slate-300">
+                            <span class="text-xs font-extrabold text-slate-700">Proporsi Sekali Makan</span>
+                        </div>
+                    </div>
+
+                    <!-- Explanatory Bullets -->
+                    <div class="space-y-4">
+                        <div class="bg-emerald-50 border-l-4 border-emerald-500 p-4 rounded-r-2xl">
+                            <h4 class="font-bold text-emerald-900 text-base">50% Karbohidrat & Lauk Pauk</h4>
+                            <p class="text-xs text-slate-600 mt-1">2/3 Makanan Pokok (Nasi, jagung, ubi) + 1/3 Lauk Pauk (Ayam, ikan, telur, tempe). Memberikan tenaga dan nutrisi pertumbuhan.</p>
+                        </div>
+
+                        <div class="bg-teal-50 border-l-4 border-teal-500 p-4 rounded-r-2xl">
+                            <h4 class="font-bold text-teal-900 text-base">50% Buah & Sayuran</h4>
+                            <p class="text-xs text-slate-600 mt-1">2/3 Sayuran + 1/3 Buah-buahan. Sangat penting karena kaya serat yang menyapu sisa kotoran di dalam usus besar!</p>
+                        </div>
+
+                        <div class="bg-cyan-50 border-l-4 border-cyan-500 p-4 rounded-r-2xl">
+                            <h4 class="font-bold text-cyan-900 text-base">3 Pesan Penting Tambahan:</h4>
+                            <ul class="text-xs text-slate-600 list-disc list-inside mt-1 space-y-1">
+                                <li>Cuci tangan pakai sabun sebelum dan sesudah makan.</li>
+                                <li>Minum air putih setidaknya 8 gelas sehari.</li>
+                                <li>Lakukan aktivitas fisik/olahraga minimal 30 menit sehari.</li>
+                            </ul>
+                        </div>
+                    </div>
+                </div>
+            </section>
+
+            <section id="section-pencernaan" class="bg-white rounded-3xl p-6 md:p-8 shadow-lg border-2 border-slate-100">
+                <div class="flex items-center gap-3 mb-6">
+                    <div class="w-12 h-12 rounded-2xl bg-sky-500 text-white flex items-center justify-center text-xl font-bold shadow-md">
+                        3
+                    </div>
+                    <div>
+                        <h3 class="text-2xl font-bold text-slate-800">Perjalanan Makanan dalam Organ Pencernaan</h3>
+                        <p class="text-sm text-slate-500">Klik setiap organ untuk mempelajari peranannya mengolah makanan bergizi.</p>
+                    </div>
+                </div>
+
+                <!-- Interactive Digestive Journey Steps -->
+                <div class="grid grid-cols-1 md:grid-cols-6 gap-3">
+                    
+                    <!-- Step 1: Mulut -->
+                    <div onclick="showOrganInfo('mulut')" class="cursor-pointer bg-slate-50 hover:bg-amber-100 border-2 border-slate-200 hover:border-amber-400 p-4 rounded-2xl text-center transition-all shadow-sm">
+                        <div class="text-3xl mb-1">👄</div>
+                        <span class="text-xs font-black text-slate-700 block">1. Mulut</span>
+                        <span class="text-[10px] text-slate-500">Pencernaan Mekanis & Enzim</span>
+                    </div>
+
+                    <!-- Step 2: Kerongkongan -->
+                    <div onclick="showOrganInfo('kerongkongan')" class="cursor-pointer bg-slate-50 hover:bg-orange-100 border-2 border-slate-200 hover:border-orange-400 p-4 rounded-2xl text-center transition-all shadow-sm">
+                        <div class="text-3xl mb-1">🥖</div>
+                        <span class="text-xs font-black text-slate-700 block">2. Kerongkongan</span>
+                        <span class="text-[10px] text-slate-500">Gerak Peristaltik</span>
+                    </div>
+
+                    <!-- Step 3: Lambung -->
+                    <div onclick="showOrganInfo('lambung')" class="cursor-pointer bg-slate-50 hover:bg-rose-100 border-2 border-slate-200 hover:border-rose-400 p-4 rounded-2xl text-center transition-all shadow-sm">
+                        <div class="text-3xl mb-1">🫁</div>
+                        <span class="text-xs font-black text-slate-700 block">3. Lambung</span>
+                        <span class="text-[10px] text-slate-500">Asam & Enzim Pepsin</span>
+                    </div>
+
+                    <!-- Step 4: Usus Halus -->
+                    <div onclick="showOrganInfo('usushalus')" class="cursor-pointer bg-slate-50 hover:bg-emerald-100 border-2 border-slate-200 hover:border-emerald-400 p-4 rounded-2xl text-center transition-all shadow-sm">
+                        <div class="text-3xl mb-1">🌀</div>
+                        <span class="text-xs font-black text-slate-700 block">4. Usus Halus</span>
+                        <span class="text-[10px] text-slate-500">Penyerapan Sari Nutrisi</span>
+                    </div>
+
+                    <!-- Step 5: Usus Besar -->
+                    <div onclick="showOrganInfo('ususbesar')" class="cursor-pointer bg-slate-50 hover:bg-teal-100 border-2 border-slate-200 hover:border-teal-400 p-4 rounded-2xl text-center transition-all shadow-sm">
+                        <div class="text-3xl mb-1">🪴</div>
+                        <span class="text-xs font-black text-slate-700 block">5. Usus Besar</span>
+                        <span class="text-[10px] text-slate-500">Penyerapan Air & Serat</span>
+                    </div>
+
+                    <!-- Step 6: Anus -->
+                    <div onclick="showOrganInfo('anus')" class="cursor-pointer bg-slate-50 hover:bg-purple-100 border-2 border-slate-200 hover:border-purple-400 p-4 rounded-2xl text-center transition-all shadow-sm">
+                        <div class="text-3xl mb-1">🚽</div>
+                        <span class="text-xs font-black text-slate-700 block">6. Anus</span>
+                        <span class="text-[10px] text-slate-500">Pembuangan Sisa</span>
+                    </div>
+                </div>
+
+                <!-- Organ Detail Dynamic Display Box -->
+                <div id="organDetailBox" class="mt-6 bg-sky-50 border-2 border-sky-300 p-5 rounded-2xl">
+                    <h4 id="organTitle" class="text-lg font-bold text-sky-900 flex items-center gap-2">
+                        <i class="fa-solid fa-circle-info"></i> Klik salah satu organ di atas!
+                    </h4>
+                    <p id="organDesc" class="text-sm text-slate-700 mt-2">
+                        Klik tombol organ di atas untuk melihat bagaimana makanan diolah secara ajaib di dalam tubuhmu!
+                    </p>
+                </div>
+            </section>
+
+            <!-- Sub-Section 4: Gangguan Pencernaan & Cara Mencegahnya -->
+            <section id="section-gangguan" class="bg-white rounded-3xl p-6 md:p-8 shadow-lg border-2 border-slate-100">
+                <div class="flex items-center gap-3 mb-6">
+                    <div class="w-12 h-12 rounded-2xl bg-rose-500 text-white flex items-center justify-center text-xl font-bold shadow-md">
+                        4
+                    </div>
+                    <div>
+                        <h3 class="text-2xl font-bold text-slate-800">Gangguan Pencernaan & Pencegahannya</h3>
+                        <p class="text-sm text-slate-500">Makanan tidak seimbang dapat menyebabkan beberapa penyakit berikut:</p>
+                    </div>
+                </div>
+
+                <div class="grid grid-cols-1 md:grid-cols-3 gap-6">
+                    <!-- Maag -->
+                    <div class="border-2 border-rose-200 bg-rose-50/50 p-5 rounded-2xl">
+                        <div class="flex items-center gap-2 text-rose-800 font-bold text-lg mb-2">
+                            <i class="fa-solid fa-triangle-exclamation text-rose-500"></i> Sembelit (Konstipasi)
+                        </div>
+                        <p class="text-xs text-slate-600 mb-3">Kondisi buang air besar terasa keras dan sulit dilakukan.</p>
+                        <div class="bg-white p-3 rounded-xl border border-rose-200 text-xs text-emerald-800 font-bold">
+                            💡 Solusi: Perbanyak makan makanan kaya serat (buah & sayur) serta cukup minum air putih!
+                        </div>
+                    </div>
+
+                    <!-- Maag -->
+                    <div class="border-2 border-amber-200 bg-amber-50/50 p-5 rounded-2xl">
+                        <div class="flex items-center gap-2 text-amber-800 font-bold text-lg mb-2">
+                            <i class="fa-solid fa-fire text-amber-500"></i> Sakit Maag / Gastritis
+                        </div>
+                        <p class="text-xs text-slate-600 mb-3">Rasa perih dan mual pada lambung akibat tingginya asam lambung.</p>
+                        <div class="bg-white p-3 rounded-xl border border-amber-200 text-xs text-emerald-800 font-bold">
+                            💡 Solusi: Makan teratur tepat waktu, jauhi makanan yang terlalu pedas & terlalu asam.
+                        </div>
+                    </div>
+
+                    <!-- Diare -->
+                    <div class="border-2 border-blue-200 bg-blue-50/50 p-5 rounded-2xl">
+                        <div class="flex items-center gap-2 text-blue-800 font-bold text-lg mb-2">
+                            <i class="fa-solid fa-droplet-slash text-blue-500"></i> Diare
+                        </div>
+                        <p class="text-xs text-slate-600 mb-3">Buang air besar terlalu sering dengan konsistensi encer karena kuman.</p>
+                        <div class="bg-white p-3 rounded-xl border border-blue-200 text-xs text-emerald-800 font-bold">
+                            💡 Solusi: Selalu cuci tangan pakai sabun, konsumsi makanan yang bersih dan tertutup rapat.
+                        </div>
+                    </div>
+                </div>
+            </section>
+        </div>
+
+        <div id="content-minigame" class="tab-content hidden space-y-6">
+            <div class="bg-white rounded-3xl p-6 md:p-8 shadow-lg border-2 border-slate-100">
+                <div class="text-center max-w-2xl mx-auto mb-6">
+                    <span class="bg-amber-100 text-amber-800 text-xs font-black px-3 py-1 rounded-full uppercase">Mini-Game Interaktif</span>
+                    <h3 class="text-2xl md:text-3xl font-extrabold text-slate-800 mt-2">Permainan: "Rakit Piring Sehatku!" 🍽️</h3>
+                    <p class="text-sm text-slate-500 mt-1">Pilih item makanan bergizi dari daftar untuk melengkapi piring makan gizi seimbangmu!</p>
+                </div>
+
+                <div class="grid md:grid-cols-2 gap-8 items-start">
+                    <!-- Food Selection Choices -->
+                    <div class="space-y-4">
+                        <h4 class="font-bold text-slate-700 text-sm uppercase tracking-wide">1. Klik Makanan untuk Menambahkan ke Piring:</h4>
+                        
+                        <div class="grid grid-cols-2 gap-2">
+                            <button onclick="addFoodToPlate('Nasi Putih / Ubi', 'pokok', '🍚')" class="bg-amber-50 hover:bg-amber-100 border-2 border-amber-300 p-3 rounded-xl flex items-center gap-2 text-left transition shadow-sm">
+                                <span class="text-2xl">🍚</span>
+                                <div>
+                                    <div class="text-xs font-bold text-amber-900">Nasi / Ubi</div>
+                                    <div class="text-[10px] text-amber-700">Makanan Pokok</div>
+                                </div>
+                            </button>
+
+                            <button onclick="addFoodToPlate('Ayam Panggang / Ikan', 'lauk', '🍗')" class="bg-rose-50 hover:bg-rose-100 border-2 border-rose-300 p-3 rounded-xl flex items-center gap-2 text-left transition shadow-sm">
+                                <span class="text-2xl">🍗</span>
+                                <div>
+                                    <div class="text-xs font-bold text-rose-900">Ayam / Ikan</div>
+                                    <div class="text-[10px] text-rose-700">Lauk Pauk</div>
+                                </div>
+                            </button>
+
+                            <button onclick="addFoodToPlate('Sayur Bayam & Wortel', 'sayur', '🥦')" class="bg-emerald-50 hover:bg-emerald-100 border-2 border-emerald-300 p-3 rounded-xl flex items-center gap-2 text-left transition shadow-sm">
+                                <span class="text-2xl">🥦</span>
+                                <div>
+                                    <div class="text-xs font-bold text-emerald-900">Sayur Bayam</div>
+                                    <div class="text-[10px] text-emerald-700">Sayuran (Serat)</div>
+                                </div>
+                            </button>
+
+                            <button onclick="addFoodToPlate('Buah Pepaya / Potongan Apel', 'buah', '🍎')" class="bg-red-50 hover:bg-red-100 border-2 border-red-300 p-3 rounded-xl flex items-center gap-2 text-left transition shadow-sm">
+                                <span class="text-2xl">🍎</span>
+                                <div>
+                                    <div class="text-xs font-bold text-red-900">Pepaya / Apel</div>
+                                    <div class="text-[10px] text-red-700">Buah-buahan</div>
+                                </div>
+                            </button>
+
+                            <button onclick="addFoodToPlate('Es Krim Serba Manis', 'junk', '🍦')" class="bg-purple-50 hover:bg-purple-100 border-2 border-purple-200 p-3 rounded-xl flex items-center gap-2 text-left transition shadow-sm">
+                                <span class="text-2xl">🍦</span>
+                                <div>
+                                    <div class="text-xs font-bold text-purple-900">Es Krim Tinggi Gula</div>
+                                    <div class="text-[10px] text-purple-600">Jajanan Manis</div>
+                                </div>
+                            </button>
+
+                            <button onclick="addFoodToPlate('Gorengan Berminyak', 'junk', '🍟')" class="bg-yellow-50 hover:bg-yellow-100 border-2 border-yellow-300 p-3 rounded-xl flex items-center gap-2 text-left transition shadow-sm">
+                                <span class="text-2xl">🍟</span>
+                                <div>
+                                    <div class="text-xs font-bold text-yellow-900">Gorengan Berminyak</div>
+                                    <div class="text-[10px] text-yellow-700">Kurang Sehat</div>
+                                </div>
+                            </button>
+                        </div>
+
+                        <div class="flex gap-2">
+                            <button onclick="resetPlate()" class="w-full bg-slate-200 hover:bg-slate-300 text-slate-700 font-bold py-2 rounded-xl text-xs transition">
+                                <i class="fa-solid fa-rotate-left"></i> Kosongkan Piring
+                            </button>
+                        </div>
+                    </div>
+
+                    <!-- Plate Visualization Area -->
+                    <div class="bg-slate-50 border-4 border-dashed border-slate-300 p-6 rounded-3xl text-center">
+                        <h4 class="font-bold text-slate-700 text-sm uppercase mb-4">2. Piring Anda Saat Ini:</h4>
+                        
+                        <div class="w-64 h-64 mx-auto rounded-full bg-white border-8 border-emerald-400 shadow-inner flex flex-col justify-center items-center p-4 relative overflow-hidden">
+                            <div id="plateItemsContainer" class="flex flex-wrap items-center justify-center gap-2">
+                                <span class="text-slate-400 text-xs italic">Piring masih kosong. Silakan pilih makanan di samping!</span>
+                            </div>
+                        </div>
+
+                        <div id="plateFeedback" class="mt-4 p-3 rounded-xl text-xs font-bold bg-slate-200 text-slate-700">
+                            Status Piring: Belum Lengkap
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <div id="content-kuis" class="tab-content hidden space-y-6">
+            <div class="bg-white rounded-3xl p-6 md:p-8 shadow-lg border-2 border-slate-100">
+                
+                <!-- Quiz Header -->
+                <div class="flex flex-wrap items-center justify-between gap-4 border-b-2 border-slate-100 pb-4 mb-6">
+                    <div>
+                        <span class="bg-purple-100 text-purple-800 text-xs font-black px-3 py-1 rounded-full uppercase">Evaluasi IPAS VI</span>
+                        <h3 class="text-2xl font-extrabold text-slate-800 mt-1">Kuis Makanan Bergizi & Pencernaan 🧠</h3>
+                    </div>
+                    <div class="flex items-center gap-4">
+                        <div class="bg-amber-100 border border-amber-300 px-4 py-2 rounded-2xl text-center">
+                            <span class="text-[10px] text-amber-800 font-bold uppercase block">Skor Kuis</span>
+                            <span id="quizScoreText" class="text-xl font-black text-amber-900">0</span>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Quiz Container -->
+                <div id="quizContainer">
+                    <!-- Dynamic Question Box -->
+                    <div id="questionBox" class="space-y-6">
+                        <!-- Questions rendered by JavaScript -->
+                    </div>
+                </div>
+
+                <!-- Quiz Finish State Card -->
+                <div id="quizFinishCard" class="hidden text-center py-8 space-y-4">
+                    <div class="text-6xl animate-bounce">🏆</div>
+                    <h3 class="text-3xl font-extrabold text-slate-800">Hebat! Kuis Selesai!</h3>
+                    <p class="text-slate-600 text-sm max-w-md mx-auto">
+                        Selamat <span id="finishStudentName" class="font-bold text-emerald-600">Siswa</span>, kamu telah menyelesaikan Kuis IPAS Kelas VI dengan nilai luar biasa!
+                    </p>
+                    
+                    <div class="inline-block bg-gradient-to-r from-emerald-500 to-teal-600 text-white px-8 py-4 rounded-3xl shadow-xl">
+                        <span class="text-xs uppercase font-bold tracking-widest block opacity-90">Nilai Akhir Kamu:</span>
+                        <span id="finalScoreDisplay" class="text-5xl font-black">100</span>
+                    </div>
+
+                    <div class="pt-4 flex justify-center gap-4">
+                        <button onclick="restartQuiz()" class="bg-slate-200 hover:bg-slate-300 text-slate-800 px-6 py-3 rounded-2xl font-bold text-sm transition">
+                            <i class="fa-solid fa-rotate-right"></i> Coba Kuis Lagi
+                        </button>
+                        <button onclick="switchTab('sertifikat')" class="bg-amber-400 hover:bg-amber-500 text-amber-950 px-6 py-3 rounded-2xl font-bold text-sm transition shadow-lg">
+                            <i class="fa-solid fa-award"></i> Lihat Sertifikat Kelulusan
+                        </button>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <div id="content-sertifikat" class="tab-content hidden space-y-6">
+            <div class="bg-white rounded-3xl p-6 md:p-8 shadow-lg border-2 border-slate-100">
+                <div class="flex flex-wrap items-center justify-between gap-4 mb-6 no-print">
+                    <div>
+                        <h3 class="text-2xl font-extrabold text-slate-800">Sertifikat Kelulusan Modul IPAS</h3>
+                        <p class="text-sm text-slate-500">Cetak atau simpan sertifikat bukti keahlian gizi seimbangmu!</p>
+                    </div>
+                    <button onclick="window.print()" class="bg-emerald-600 hover:bg-emerald-700 text-white px-5 py-2.5 rounded-2xl font-bold text-sm shadow-md transition flex items-center gap-2">
+                        <i class="fa-solid fa-print"></i> Cetak / Simpan PDF
+                    </button>
+                </div>
+
+                <!-- Printable Official Certificate Frame -->
+                <div id="certificate-print-area" class="bg-gradient-to-br from-amber-50 via-white to-emerald-50 border-8 border-amber-400 p-8 md:p-12 rounded-3xl shadow-2xl relative text-center overflow-hidden my-4">
+                    <!-- Background Watermark Frame -->
+                    <div class="absolute inset-2 border-2 border-dashed border-emerald-300 rounded-2xl pointer-events-none"></div>
+                    <div class="absolute -right-12 -bottom-12 opacity-10 text-emerald-800 text-9xl">
+                        <i class="fa-solid fa-award"></i>
+                    </div>
+
+                    <!-- Header -->
+                    <div class="mb-6">
+                        <div class="inline-block bg-emerald-600 text-white px-4 py-1 rounded-full text-xs font-black uppercase tracking-widest mb-2">
+                            Sertifikat Penghargaan Pembelajaran IPAS
+                        </div>
+                        <h2 class="text-3xl md:text-5xl font-extrabold text-slate-800 font-fun tracking-wide">SERTIFIKAT KELULUSAN</h2>
+                        <p class="text-xs md:text-sm text-slate-500 mt-1">Diberikan secara resmi atas kelulusan materi modul interaktif:</p>
+                        <p class="text-sm md:text-base font-bold text-emerald-700">"Makanan Bergizi untuk Kesehatan Pencernaanmu"</p>
+                    </div>
+
+                    <!-- Recipient Name -->
+                    <div class="my-8">
+                        <span class="text-xs text-slate-400 uppercase font-bold tracking-widest block mb-1">Diberikan Kepada Siswa/i:</span>
+                        <h3 id="certStudentName" class="text-3xl md:text-5xl font-black text-amber-600 underline decoration-amber-300 decoration-wavy underline-offset-8">
+                            Nama Siswa
+                        </h3>
+                        <p class="text-xs text-slate-500 mt-3 font-semibold">Siswa Kelas VI Sekolah Dasar / Madrasah Ibtidaiyah</p>
+                    </div>
+
+                    <!-- Certificate Achievement Details -->
+                    <div class="grid grid-cols-2 md:grid-cols-3 gap-4 max-w-lg mx-auto bg-white/80 backdrop-blur p-4 rounded-2xl border border-amber-200 mb-8 shadow-sm">
+                        <div>
+                            <span class="text-[10px] text-slate-400 uppercase font-bold block">Status Modul</span>
+                            <span class="text-xs font-extrabold text-emerald-600"><i class="fa-solid fa-circle-check"></i> LULUS KKM</span>
+                        </div>
+                        <div>
+                            <span class="text-[10px] text-slate-400 uppercase font-bold block">Nilai Kuis</span>
+                            <span id="certScore" class="text-xs font-extrabold text-amber-600">100 / 100</span>
+                        </div>
+                        <div class="col-span-2 md:col-span-1">
+                            <span class="text-[10px] text-slate-400 uppercase font-bold block">Tanggal Terbit</span>
+                            <span id="certDate" class="text-xs font-extrabold text-slate-700">30 September 2026</span>
+                        </div>
+                    </div>
+
+                    <!-- Stamp & Signatures -->
+                    <div class="flex justify-between items-end max-w-md mx-auto pt-4 border-t border-slate-200">
+                        <div class="text-left">
+                            <div class="w-16 h-16 rounded-full bg-emerald-500/10 border-2 border-emerald-500 flex items-center justify-center text-emerald-600 font-bold text-2xl mb-1 mx-auto md:mx-0">
+                                🥗
+                            </div>
+                            <span class="text-[10px] font-bold text-slate-500 block">Cap Resmi IPAS VI</span>
+                        </div>
+                        <div class="text-right">
+                            <div class="font-fun text-xl text-emerald-800 font-bold border-b border-slate-400 pb-1 mb-1">
+                                Tim Guru IPAS SD
+                            </div>
+                            <span class="text-[10px] font-bold text-slate-500 block">Guru Pendamping IPAS</span>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+    </main>
+
+    <script>
+        let studentName = "Siswa Baru";
+        let quizScore = 0;
+        let plateState = {
+            pokok: false,
+            lauk: false,
+            sayur: false,
+            buah: false
+        };
+
+        // Web Audio API Synth Generator for Background Music & SFX
+        let audioCtx = null;
+        let isMusicPlaying = false;
+        let musicInterval = null;
+
+        function initAudio() {
+            if (!audioCtx) {
+                audioCtx = new (window.AudioContext || window.webkitAudioContext)();
+            }
+        }
+
+        // Play pleasant chime melody note
+        function playNote(freq, type = 'sine', duration = 0.3) {
+            if (!audioCtx) return;
+            try {
+                const osc = audioCtx.createOscillator();
+                const gain = audioCtx.createGain();
+                osc.type = type;
+                osc.frequency.setValueAtTime(freq, audioCtx.currentTime);
+                gain.gain.setValueAtTime(0.1, audioCtx.currentTime);
+                gain.gain.exponentialRampToValueAtTime(0.001, audioCtx.currentTime + duration);
+                osc.connect(gain);
+                gain.connect(audioCtx.destination);
+                osc.start();
+                osc.stop(audioCtx.currentTime + duration);
+            } catch(e) {}
+        }
+
+        // Background Music Synthesizer (Pentatonic Happy Chime Loop)
+        const melodyNotes = [261.63, 293.66, 329.63, 392.00, 440.00, 523.25]; // C, D, E, G, A, C
+        let melodyStep = 0;
+
+        function toggleMusic() {
+            initAudio();
+            if (audioCtx.state === 'suspended') {
+                audioCtx.resume();
+            }
+
+            const btnText = document.getElementById('musicText');
+            const btnIcon = document.getElementById('musicIcon');
+
+            if (isMusicPlaying) {
+                clearInterval(musicInterval);
+                isMusicPlaying = false;
+                btnText.innerText = "Musik: OFF";
+                btnIcon.className = "fa-solid fa-music text-purple-700";
+            } else {
+                isMusicPlaying = true;
+                btnText.innerText = "Musik: ON 🎵";
+                btnIcon.className = "fa-solid fa-volume-high text-emerald-600 animate-pulse";
+                
+                musicInterval = setInterval(() => {
+                    const note = melodyNotes[melodyStep % melodyNotes.length];
+                    playNote(note, 'sine', 0.4);
+                    melodyStep++;
+                }, 400);
+            }
+        }
+
+        // Sound effect for correct answer
+        function playCorrectSound() {
+            initAudio();
+            playNote(523.25, 'triangle', 0.2); // C5
+            setTimeout(() => playNote(659.25, 'triangle', 0.3), 150); // E5
+            setTimeout(() => playNote(783.99, 'triangle', 0.4), 300); // G5
+        }
+
+        // Sound effect for wrong answer
+        function playWrongSound() {
+            initAudio();
+            playNote(220, 'sawtooth', 0.3);
+            setTimeout(() => playNote(196, 'sawtooth', 0.4), 200);
+        }
+
+        function updateStudentName(val) {
+            studentName = val.trim() || "Siswa Baru";
+            document.getElementById('navStudentName').innerText = studentName;
+            document.getElementById('certStudentName').innerText = studentName;
+            document.getElementById('finishStudentName').innerText = studentName;
+        }
+
+        // Set Today's Date in Certificate
+        const options = { year: 'numeric', month: 'long', day: 'numeric' };
+        document.getElementById('certDate').innerText = new Date().toLocaleDateString('id-ID', options);
+
+        function switchTab(tabId) {
+            // Hide all tab content
+            document.querySelectorAll('.tab-content').forEach(el => el.classList.add('hidden'));
+            
+            // Deactivate all tab buttons
+            document.querySelectorAll('.tab-btn').forEach(btn => {
+                btn.classList.remove('bg-emerald-600', 'text-white', 'shadow-md');
+                btn.classList.add('bg-white', 'text-slate-700');
+            });
+
+            // Show selected tab content
+            document.getElementById('content-' + tabId).classList.remove('hidden');
+
+            // Activate current tab button
+            const activeBtn = document.getElementById('tab-' + tabId);
+            activeBtn.classList.remove('bg-white', 'text-slate-700');
+            activeBtn.classList.add('bg-emerald-600', 'text-white', 'shadow-md');
+
+            // Play small chime
+            initAudio();
+            playNote(440, 'sine', 0.1);
+        }
+
+        const organData = {
+            mulut: {
+                title: "👄 1. Mulut - Pintu Masuk Utama",
+                desc: "Di dalam mulut, makanan dikunyah oleh gigi (pencernaan mekanis) dan dicampur saliva/air liur yang mengandung enzim Amilase (pencernaan kimiawi) untuk memecah karbohidrat."
+            },
+            kerongkongan: {
+                title: "🥖 2. Kerongkongan - Lorong Makanan",
+                desc: "Makanan diremas dan didorong menuju lambung melalui gerakan meremas otomatis yang disebut GERAK PERISTALTIK."
+            },
+            lambung: {
+                title: "🫁 3. Lambung - Pengolah Asam",
+                desc: "Lambung mengocok makanan dan membunuh kuman penyakit menggunakan Asam Lambung (HCl), serta mencerna protein menggunakan Enzim Pepsin."
+            },
+            usushalus: {
+                title: "🌀 4. Usus Halus - Pusat Penyerapan Gizi",
+                desc: "Di usus halus, sari-sari makanan (karbohidrat, protein, lemak, vitamin) diserap sempurna ke dalam pembuluh darah untuk disebarkan ke seluruh tubuh!"
+            },
+            ususbesar: {
+                title: "🪴 5. Usus Besar - Pengolah Serat & Air",
+                desc: "Sisa makanan yang tidak tercerna masuk ke sini. Usus besar menyerap air dan pembusukan bantuan bakteri baik. Makanan kaya SERAT melancarkan proses ini!"
+            },
+            anus: {
+                title: "🚽 6. Anus - Saluran Pembuangan",
+                desc: "Sisa makanan yang sudah tidak dibutuhkan tubuh (feses/kotoran) dibuang secara teratur melalui anus."
+            }
+        };
+
+        function showOrganInfo(organKey) {
+            const data = organData[organKey];
+            if (data) {
+                document.getElementById('organTitle').innerHTML = `<i class="fa-solid fa-circle-check text-emerald-500"></i> ${data.title}`;
+                document.getElementById('organDesc').innerText = data.desc;
+                initAudio();
+                playNote(523.25, 'sine', 0.2);
+            }
+        }
+
+        function addFoodToPlate(name, category, emoji) {
+            const container = document.getElementById('plateItemsContainer');
+            
+            if (category === 'junk') {
+                playWrongSound();
+                alert(`⚠️ Hati-hati! ${name} mengandung lemak berlebih atau gula tinggi. Sebaiknya dibatasi agar pencernaan tetap sehat!`);
+                return;
+            }
+
+            if (Object.values(plateState).every(v => v === true)) {
+                alert("🎉 Piringmu sudah lengkap 4 gizi seimbang!");
+                return;
+            }
+
+            // If empty text exists, clear it
+            if (container.innerText.includes('Piring masih kosong')) {
+                container.innerHTML = '';
+            }
+
+            // Check if category already added
+            if (plateState[category]) {
+                alert(`Kamu sudah menambahkan kategori ini ke piring!`);
+                return;
+            }
+
+            plateState[category] = true;
+
+            const foodTag = document.createElement('div');
+            foodTag.className = "bg-emerald-100 border border-emerald-300 text-emerald-900 px-2.5 py-1 rounded-xl text-xs font-bold flex items-center gap-1 animate-bounce";
+            foodTag.innerHTML = `<span>${emoji}</span> <span>${name}</span>`;
+            container.appendChild(foodTag);
+
+            playCorrectSound();
+            checkPlateStatus();
+        }
+
+        function checkPlateStatus() {
+            const feedback = document.getElementById('plateFeedback');
+            const count = Object.values(plateState).filter(Boolean).length;
+
+            if (count === 4) {
+                feedback.className = "mt-4 p-3 rounded-xl text-xs font-bold bg-emerald-500 text-white shadow-md animate-pulse";
+                feedback.innerHTML = "🌟 SEMPURNA! Piringmu memenuhi Standar Gizi Seimbang Isi Piringku!";
+                confetti({ particleCount: 50, spread: 60, origin: { y: 0.7 } });
+            } else {
+                feedback.className = "mt-4 p-3 rounded-xl text-xs font-bold bg-amber-200 text-amber-900";
+                feedback.innerHTML = `Piring terisi ${count} dari 4 komponen gizi seimbang.`;
+            }
+        }
+
+        function resetPlate() {
+            plateState = { pokok: false, lauk: false, sayur: false, buah: false };
+            document.getElementById('plateItemsContainer').innerHTML = `<span class="text-slate-400 text-xs italic">Piring masih kosong. Silakan pilih makanan di samping!</span>`;
+            checkPlateStatus();
+        }
+
+        const quizQuestions = [
+            {
+                q: "1. Zat makanan yang sangat krusial untuk melancarkan pencernaan di usus besar dan mencegah sembelit adalah...",
+                options: ["Lemak jenuh", "Serat (Fiber)", "Gula murni", "Garam"],
+                correct: 1,
+                explain: "Serat membantu memperlancar pergerakan makanan di usus dan melunakkan sisa buang air besar."
+            },
+            {
+                q: "2. Organ tubuh tempat terjadinya penyerapan sari-sari nutrisi makanan ke dalam pembuluh darah adalah...",
+                options: ["Mulut", "Kerongkongan", "Usus Halus", "Anus"],
+                correct: 2,
+                explain: "Usus halus memiliki lipatan vili yang berfungsi menyerap nutrisi makanan."
+            },
+            {
+                q: "3. Menurut panduan gizi seimbang 'Isi Piringku', porsi buah-buahan dan sayuran memenuhi...",
+                options: ["10% isi piring", "25% isi piring", "50% setengah isi piring", "100% seluruh piring"],
+                correct: 2,
+                explain: "Setengah (50%) dari piring makan kita idealnya diisi oleh gabungan sayuran dan buah-buahan."
+            },
+            {
+                q: "4. Gangguan pencernaan akibat tingginya asam lambung karena pola makan yang tidak teratur dinamakan...",
+                options: ["Maag (Gastritis)", "Diare", "Sembelit", "Sariawan"],
+                correct: 0,
+                explain: "Maag dipicu oleh pola makan tidak teratur yang membuat asam lambung mengikis dinding lambung."
+            },
+            {
+                q: "5. Mengapa kita disarankan untuk mengunyah makanan hingga halus sebelum menelannya?",
+                options: ["Agar makanan cepat habis", "Memperingan kerja lambung dan memperluas kerja enzim", "Agar lidah tidak terasa pedas", "Agar tidak perlu minum air"],
+                correct: 1,
+                explain: "Mengunyah halus memperluas permukaan makanan sehingga enzim pencernaan bekerja lebih efektif."
+            }
+        ];
+
+        let userAnswers = new Array(quizQuestions.length).fill(null);
+
+        function renderQuiz() {
+            const container = document.getElementById('questionBox');
+            container.innerHTML = '';
+
+            quizQuestions.forEach((item, index) => {
+                const qDiv = document.createElement('div');
+                qDiv.className = "p-5 rounded-2xl border-2 border-slate-100 bg-slate-50 space-y-3";
+
+                let optionsHTML = '';
+                item.options.forEach((opt, optIdx) => {
+                    const isSelected = userAnswers[index] === optIdx;
+                    const btnStyle = isSelected 
+                        ? 'bg-purple-600 text-white border-purple-700 shadow-md' 
+                        : 'bg-white hover:bg-slate-100 text-slate-800 border-slate-200';
+
+                    optionsHTML += `
+                        <button onclick="selectAnswer(${index}, ${optIdx})" class="w-full text-left p-3 rounded-xl border-2 font-semibold text-xs md:text-sm transition flex items-center justify-between ${btnStyle}">
+                            <span>${opt}</span>
+                            ${isSelected ? '<i class="fa-solid fa-circle-check"></i>' : '<i class="fa-regular fa-circle text-slate-300"></i>'}
+                        </button>
+                    `;
+                });
+
+                qDiv.innerHTML = `
+                    <h4 class="font-bold text-slate-800 text-sm md:text-base">${item.q}</h4>
+                    <div class="grid grid-cols-1 md:grid-cols-2 gap-2 mt-2">
+                        ${optionsHTML}
+                    </div>
+                `;
+                container.appendChild(qDiv);
+            });
+
+            // Add Submit Button
+            const submitBtn = document.createElement('button');
+            submitBtn.className = "w-full bg-emerald-500 hover:bg-emerald-600 text-white font-extrabold py-3.5 rounded-2xl text-base shadow-lg transition mt-4";
+            submitBtn.innerHTML = `<i class="fa-solid fa-paper-plane"></i> Kirim & Hitung Nilai Kuis`;
+            submitBtn.onclick = calculateQuizScore;
+            container.appendChild(submitBtn);
+        }
+
+        function selectAnswer(qIndex, optIndex) {
+            userAnswers[qIndex] = optIndex;
+            initAudio();
+            playNote(440, 'sine', 0.1);
+            renderQuiz();
+        }
+
+        function calculateQuizScore() {
+            if (userAnswers.includes(null)) {
+                alert("⚠️ Harap jawab semua pertanyaan kuis terlebih dahulu!");
+                return;
+            }
+
+            let correctCount = 0;
+            userAnswers.forEach((ans, idx) => {
+                if (ans === quizQuestions[idx].correct) {
+                    correctCount++;
+                }
+            });
+
+            quizScore = Math.round((correctCount / quizQuestions.length) * 100);
+            document.getElementById('quizScoreText').innerText = quizScore;
+            document.getElementById('finalScoreDisplay').innerText = quizScore;
+            document.getElementById('certScore').innerText = `${quizScore} / 100`;
+
+            // Hide questions, show finish card
+            document.getElementById('questionBox').classList.add('hidden');
+            document.getElementById('quizFinishCard').classList.remove('hidden');
+
+            playCorrectSound();
+            confetti({ particleCount: 100, spread: 70, origin: { y: 0.6 } });
+        }
+
+        function restartQuiz() {
+            userAnswers = new Array(quizQuestions.length).fill(null);
+            document.getElementById('questionBox').classList.remove('hidden');
+            document.getElementById('quizFinishCard').classList.add('hidden');
+            renderQuiz();
+        }
+
+        // Initialize App on window load
+        window.onload = function() {
+            renderQuiz();
+        };
+    </script>
+</body>
+</html>
